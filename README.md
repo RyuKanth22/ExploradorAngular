@@ -12,7 +12,6 @@ npm ci
 npm start
 ```
 
-Abrir http://localhost:4200. Para detener el servidor, pulsar **Ctrl+C** en la terminal. No necesita ejecutar .NET, SQL Server ni configurar claves de API.
 
 Si npm 10 falla con `Cannot read properties of null (reading 'edgesOut')`, usar `npx --yes npm@11 ci`. No es necesario modificar la instalación global de npm.
 
