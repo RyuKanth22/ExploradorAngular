@@ -5,6 +5,8 @@ on:
   workflow_dispatch:
 permissions:
   contents: read
+  pages: write
+  id-token: write
 concurrency:
   group: pages
   cancel-in-progress: true
@@ -22,6 +24,8 @@ jobs:
       - name: Configurar Pages
         id: pages
         uses: actions/configure-pages@v5
+        with:
+          enablement: true
       - name: Compilar
         env:
           BASE_PATH: ${{ steps.pages.outputs.base_path }}
