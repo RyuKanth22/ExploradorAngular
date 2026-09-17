@@ -1,0 +1,115 @@
+<section class="intro">
+  <div class="eyebrow"><span></span> SIGUE TU CURIOSIDAD</div>
+  <h1>
+    Pequeños datos.<br class="mobile-break" />
+    <span>Grandes descubrimientos.</span>
+  </h1>
+  <p>
+    Un buen día empieza explorando. Encuentra tu próxima película<br class="desktop-break" />
+    o descubre cómo está el cielo al otro lado del mundo.
+  </p>
+</section>
+<div class="nav-row">
+  <nav mat-tab-nav-bar [tabPanel]="tabPanel" aria-label="Seleccionar colección">
+    <a
+      mat-tab-link
+      routerLink="/peliculas"
+      routerLinkActive
+      #movies="routerLinkActive"
+      [active]="movies.isActive"
+      ><span class="tab-icon" aria-hidden="true">▤</span> Películas</a
+    >
+    <a
+      mat-tab-link
+      routerLink="/clima"
+      routerLinkActive
+      #weather="routerLinkActive"
+      [active]="weather.isActive"
+      ><span class="tab-icon" aria-hidden="true">☀</span> Clima</a
+    >
+  </nav>
+  <span class="source-note"><span></span> Datos de APIs públicas</span>
+</div>
+<mat-tab-nav-panel #tabPanel>
+  <section class="feature-banner" [class.climate]="dataset === 'weather'">
+    <div class="banner-copy">
+      <span class="banner-label">{{
+        dataset === 'movies' ? 'LA MAGIA DEL CINE' : 'UNA MIRADA AL CIELO'
+      }}</span>
+      <h2>
+        {{
+          dataset === 'movies'
+            ? 'Historias que se quedan contigo.'
+            : 'Cada ciudad tiene su propio cielo.'
+        }}
+      </h2>
+      <p>
+        {{
+          dataset === 'movies'
+            ? 'Explora el universo de Studio Ghibli, una película a la vez.'
+            : 'Consulta el clima actual de 12 ciudades, de Bogotá a Tokio.'
+        }}
+      </p>
+      <span class="banner-tag">{{
+        dataset === 'movies' ? 'STUDIO GHIBLI · COLECCIÓN' : 'OPEN-METEO · CLIMA ACTUAL'
+      }}</span>
+    </div>
+    <div class="banner-art" aria-hidden="true">
+      <div class="orbit orbit-one"></div>
+      <div class="orbit orbit-two"></div>
+      <div class="sun"></div>
+      <span class="art-star star-one">✦</span><span class="art-star star-two">✧</span>
+      <div class="hill hill-back"></div>
+      <div class="hill hill-front"></div>
+      <span class="art-caption">{{
+        dataset === 'movies' ? 'IMAGINA · DESCUBRE · EXPLORA' : 'OBSERVA · RESPIRA · EXPLORA'
+      }}</span>
+    </div>
+  </section>
+  <div class="collection-meta">
+    <span>{{
+      dataset === 'movies' ? 'Un poco de fantasía para tu día' : 'El mundo, ciudad por ciudad'
+    }}</span>
+    <button mat-button (click)="load()" [disabled]="loading()">
+      <span class="refresh-icon" aria-hidden="true">↻</span>
+      {{ loading() ? 'Cargando…' : 'Actualizar' }}
+    </button>
+  </div>
+  <section class="data-card" [attr.aria-busy]="loading()">
+    @if (loading()) {
+      <mat-progress-bar mode="indeterminate" aria-label="Cargando datos" />
+      <div class="loading-state" role="status">
+        <span class="loading-mark">✳</span>
+        <h2>Preparando tus descubrimientos</h2>
+        <p>
+          Estamos consultando {{ dataset === 'movies' ? 'las películas' : 'el clima' }}. Un momento…
+        </p>
+      </div>
+    } @else if (error()) {
+      <div class="error-state" role="alert">
+        <span class="state-icon">!</span>
+        <h2>No pudimos actualizar la colección</h2>
+        <p>{{ error() }}</p>
+        <button mat-flat-button (click)="load()">Volver a intentar</button>
+      </div>
+    } @else {
+      <app-data-table [dataset]="dataset" [rows]="rows()" />
+    }
+  </section>
+  <div class="data-footnote">
+    <span
+      >Fuente:
+      @if (dataset === 'movies') {
+        <a href="https://ghibliapi.vercel.app/" target="_blank" rel="noopener noreferrer"
+          >Studio Ghibli API ↗</a
+        ><span class="footnote-detail"> · Estreno por año · Valoración Rotten Tomatoes</span>
+      } @else {
+        <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo ↗</a
+        ><span class="footnote-detail"> · Temperatura en °C · CC BY 4.0</span>
+      }
+    </span>
+    @if (updatedAt() && !error()) {
+      <span>Consultado a las {{ updatedAt() | date: 'HH:mm' }}</span>
+    }
+  </div>
+</mat-tab-nav-panel>

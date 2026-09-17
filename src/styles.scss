@@ -1,0 +1,58 @@
+@use '@angular/material' as mat;
+html {
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$green-palette,
+        tertiary: mat.$yellow-palette,
+      ),
+      typography: 'Segoe UI',
+      density: 0,
+    )
+  );
+  @include mat.theme-overrides(
+    (
+      primary: #31593c,
+      on-primary: #ffffff,
+      surface: #ffffff,
+      on-surface: #20372b,
+    )
+  );
+  color-scheme: light;
+  --ink: #233b2d;
+  --green: #31593c;
+  --muted: #728077;
+  --line: #e2e8e1;
+  background: #f9faf6;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: 'Segoe UI', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+button,
+input {
+  font: inherit;
+}
+button,
+a,
+input {
+  -webkit-tap-highlight-color: transparent;
+}
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid #809d58;
+  outline-offset: 4px;
+}
+.mat-mdc-tab-link {
+  letter-spacing: 0 !important;
+  font-size: 13px !important;
+}
+.mat-mdc-paginator {
+  font-size: 11px !important;
+}
