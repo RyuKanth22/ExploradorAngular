@@ -24,8 +24,6 @@ jobs:
       - name: Configurar Pages
         id: pages
         uses: actions/configure-pages@v5
-        with:
-          enablement: true
       - name: Compilar
         env:
           BASE_PATH: ${{ steps.pages.outputs.base_path }}
